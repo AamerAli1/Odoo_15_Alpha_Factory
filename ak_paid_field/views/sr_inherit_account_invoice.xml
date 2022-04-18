@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record
+		id="view_invoice_tree_extends_custom_field_for_paid_amount"
+		model="ir.ui.view">
+		<field name="name">view.invoice.tree.extends.custom.field.for.paid.amount</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_invoice_tree" />
+		<field name="arch" type="xml">
+		
+			<field name="amount_total_signed" position="after">
+				<field name="amount_total"  string = "Total Amount FC"/>
+			</field>
+
+			<field name="amount_residual_signed" position="before">
+				<field name="amount_paid" />
+			</field>
+
+			<field name="amount_residual_signed" position="before">
+				<field name="amount_paid_signed" />
+			</field>
+
+			<field name="amount_residual_signed" position="after">
+				<field name="amount_residual" string = "Amount Due FC"/>
+			</field>
+
+
+		</field>
+	</record>
+</odoo>
