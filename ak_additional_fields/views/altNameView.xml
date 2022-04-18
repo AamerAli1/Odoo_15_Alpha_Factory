@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<record	id="view_search_add_altname_to_partners" model="ir.ui.view">
+<field name="name">view.partner.add.altname</field>
+<field name="model">res.partner</field>
+<field name="inherit_id" ref="base.view_partner_form"/>
+<field name="arch" type="xml">
+
+   <xpath expr = "//h1"  position = "after" >
+       <group>
+       <field name="altName" default_focus="1" placeholder="Alternative Name"/>
+       <field name="partnerCode" default_focus="1" placeholder="Code"/>
+        </group>
+
+   </xpath>
+
+ </field>
+
+ </record>
+    <record	id="view_list_add_code" model="ir.ui.view">
+<field name="name">view.partner.list.add.code</field>
+<field name="model">res.partner</field>
+<field name="inherit_id" ref="base.view_partner_tree"/>
+<field name="arch" type="xml">
+
+   <field name="display_name"  position = "after" >
+      <field name = "partnerCode"/>
+   </field>
+
+
+ </field>
+ </record>
+</odoo>
