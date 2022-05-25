@@ -2,7 +2,7 @@
 {
     'name': "Additonal fields",
     'version': "15.0.0.1",
-    'summary': "Additional fields",
+    'summary': "Additional fields for Alpha Factory",
     'category': 'Extra Addons',
     'description': """
         This app will add alternative name and code to partners

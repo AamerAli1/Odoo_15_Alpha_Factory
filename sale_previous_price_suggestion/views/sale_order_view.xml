@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_inherited" model="ir.ui.view">
+        <field name="name">sale.order.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="after">
+                <field name="order_line_id" context="{'get_price_unit':True}" domain="[('id','in',order_line_ids)]" options="{'no_open':True,'no_create':True,'no_edit':'True','always_reload':'True'}"/>
+                <field name="order_line_ids" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
