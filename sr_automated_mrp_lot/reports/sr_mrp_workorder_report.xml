@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="inherit_report_mrporder" inherit_id="mrp.report_mrporder">
+		<xpath expr="//table[@t-if='o.move_raw_ids']/thead/tr/th[1]" position="after">
+			<th>Lot</th>
+		</xpath>
+		<xpath expr="//table[@t-if='o.move_raw_ids']/tbody/t/tr/td[1]" position="after">
+			<td>
+				<span t-field="raw_line.consumed_lot_name"/>
+			</td>
+		</xpath>
+	</template>
+</odoo>

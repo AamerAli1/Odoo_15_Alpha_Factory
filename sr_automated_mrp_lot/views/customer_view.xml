@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<record	id="view_invoice_tree_extends_custom_field_for_paid_amount"	model="ir.ui.view">
+<field name="name">view.mrp.production.add.customer.name</field>
+<field name="model">mrp.production</field>
+<field name="inherit_id" ref="mrp.mrp_production_form_view" />
+<field name="arch" type="xml">
+
+     <field name="user_id" position="after">
+     <field name="customer_name"/>
+     </field>
+
+ </field>
+ </record>
+</odoo>

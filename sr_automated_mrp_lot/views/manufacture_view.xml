@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<record	id="view_form_add_qc"	model="ir.ui.view">
+<field name="name">view.mrp.production.add.qc</field>
+<field name="model">mrp.production</field>
+<field name="inherit_id" ref="mrp.mrp_production_form_view" />
+<field name="arch" type="xml">
+
+   <field name = "bom_id"  position = "after" >
+
+       <field name="grinding_quality" ></field>
+       <field name="viscosity" ></field>
+       <field name="delta_e" ></field>
+       <field name="respName" ></field>
+
+   </field>
+
+     <field name = "bom_id"  position = "before" >
+
+       <field name="split_number" string = "Split Number" ></field>
+
+   </field>
+ </field>
+ </record>
+</odoo>
