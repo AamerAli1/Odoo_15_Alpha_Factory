@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_amount_distribution,access_amount_distribution,model_amount_distribution,,1,1,1,1
+access_amount_distribution_line,access_amount_distribution_line,model_amount_distribution_line,,1,1,1,1
+access_service_charge_line,access_service_charge_line,model_service_charge_line,,1,1,1,1

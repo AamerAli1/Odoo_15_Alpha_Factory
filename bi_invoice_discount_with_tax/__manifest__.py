@@ -2,7 +2,7 @@
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Odoo Global Discount on Invoice with Tax calculation',
-    'version': '15.0.0.0',
+    'version': '15.0.1.0',
     'category': 'Invoicing',
     'sequence': 14,
     'price': 25,

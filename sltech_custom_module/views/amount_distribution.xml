@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="amount_distribution_form" model="ir.ui.view">
+        <field name="name">amount_distribution.form</field>
+        <field name="model">amount.distribution</field>
+        <field name="arch" type="xml">
+            <form string="Amount Distribution">
+                <sheet>
+                    <group>
+                        <field name="service_charge_ids" widget="many2many_tags"
+                               domain="[('is_service_charge', '=', True)]"/>
+                    </group>
+                    <group>
+                        <field name="service_charge_line_ids"/>
+                    </group>
+                    <group>
+                        <field name="distribution_line_ids"/>
+                    </group>
+                </sheet>
+                <footer>
+                <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                <button name="action_save" type="object" class="btn btn-secondary">Save</button>
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="amount_distribution_line_tree" model="ir.ui.view">
+        <field name="name">amount_distribution_line.tree</field>
+        <field name="model">amount.distribution.line</field>
+        <field name="arch" type="xml">
+            <tree string="Amount Distribution Line" create="false" editable="bottom" delete="false">
+                <field name="invoice_no" readonly="1"/>
+                <field name="date" readonly="1"/>
+                <field name="item_name" readonly="1"/>
+                <field name="item_no" readonly="1"/>
+                <field name="quantity" readonly="1"/>
+                <field name="unit_price" readonly="1"/>
+                <field name="is_distribute"/>
+                <field name="will_distribute_amount"/>
+                <field name="move_id" invisible="1"/>
+                <field name="line_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_charge_line_tree" model="ir.ui.view">
+        <field name="name">service_charge_line.tree</field>
+        <field name="model">service.charge.line</field>
+        <field name="arch" type="xml">
+            <tree string="Amount Distribution Line" create="false" editable="bottom" delete="false">
+                <field name="slip_type" readonly="1"/>
+                <field name="invoice_no" readonly="1"/>
+                <field name="date" readonly="1"/>
+                <field name="distribution_type"/>
+                <field name="amount" readonly="1"/>
+                <field name="amount_to_distribute"/>
+                <field name="product_id" invisible="1" />
+                <field name="line_id" invisible="1"/>
+
+            </tree>
+        </field>
+    </record>
+
+</odoo>
