@@ -2,26 +2,41 @@
 <odoo>
     <data>
 
+        <record id="view_out_invoice_tree_inherit" model="ir.ui.view">
+            <field name="name">account.out.invoice.tree</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="payment_state" position="before">
+                    <field name="service_amount_remaining"
+                           widget="monetary"
+                           invisible="not context.get('sltech_service_charge')"/>
+                </field>
+            </field>
+        </record>
+
         <record id="service_charge_menu_action" model="ir.actions.act_window">
             <field name="name">Service Charge</field>
             <field name="res_model">account.move</field>
             <field name="view_mode">tree,kanban,form</field>
-            <field name="view_id" ref="account.view_out_invoice_tree"/>
+            <field name="view_id" ref="view_out_invoice_tree_inherit"/>
             <field name="search_view_id" ref="account.view_account_invoice_filter"/>
             <field name="domain">[('move_type', '=', 'in_invoice'),('is_service_charge', '=', True)]</field>
-            <field name="context" eval="{'from_service': True,'default_is_service_charge':True, 'default_journal_id': ref('sltech_custom_module.sltech_service_charge_journal'),'default_move_type': 'out_invoice'}"/>
+            <field name="context"
+                   eval="{'from_service': True,'sltech_service_charge': True, 'default_is_service_charge':True, 'default_journal_id': ref('sltech_custom_module.sltech_service_charge_journal'),'default_move_type': 'in_invoice'}"/>
             <field name="help" type="html">
-              <p class="o_view_nocontent_smiling_face">
-                Create a customer invoice
-              </p><p>
-                Create invoices, register payments and keep track of the discussions with your customers.
-              </p>
+                <p class="o_view_nocontent_smiling_face">
+                    Create a customer invoice
+                </p>
+                <p>
+                    Create invoices, register payments and keep track of the discussions with your customers.
+                </p>
             </field>
         </record>
 
 
-             <menuitem name="Service Charge" id="website_service_charge_menu" action="service_charge_menu_action"
-              parent="account_accountant.menu_accounting" />
+        <menuitem name="Service Charge" id="website_service_charge_menu" action="service_charge_menu_action"
+                  parent="account_accountant.menu_accounting"/>
 
         <record id="action_amount_distribution" model="ir.actions.server">
             <field name="name">Amount Distribution</field>
@@ -29,6 +44,10 @@
             <field name="binding_model_id" ref="account.model_account_move"/>
             <field name="state">code</field>
             <field name="code">action= records.open_popup()</field>
+        </record>
+
+        <record id="account.action_move_in_invoice_type" model="ir.actions.act_window">
+            <field name="domain">[('move_type', '=', 'in_invoice'),('is_service_charge', '!=', True)]</field>
         </record>
 
     </data>

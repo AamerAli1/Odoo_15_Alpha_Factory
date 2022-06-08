@@ -279,10 +279,11 @@
 						</t>
 					</tbody>
 				</table>
+   <div class="footer clearfix">
 
-                <div class="clearfix" style="margin-top:10px;margin-bottom:40px">
 
-                    <table style="font-size:14px;width: 100%">
+                    <table style="font-size:14px;border: 1px solid black; width: 100%">
+
                          <tr>
                             <td/>
                             <td/>
@@ -323,13 +324,13 @@
                             <td colspan="2">
                                 <span style="float: right">Amount before VAT</span>
                                 <span style="float: right">المبلغ قبل الضريبة</span>
-                            </td>   
+                            </td>
                             <td>&amp;nbsp;</td>
                             <td style="text-align: center;border: 1px solid black;">
                                 <span>
                                     <t t-set = "untaxed_amount" t-value="o.amount_untaxed - o.discount_amt" />
                                     <t t-esc="o.currency_id.symbol"/>
-                                    <t t-esc="'%.2f'% untaxed_amount "/>
+                                    <t t-esc="'%.2f'% untaxed_amount"/>
                                 </span>
                             </td>
                         </tr>
@@ -370,15 +371,32 @@
                         <tr>
                             <td colspan="6" style="height:60px;"/>
                         </tr>
+                        <tr>
+                            <td colspan="3">
+                                <span>Signature</span>
+                                <span><t t-esc="'_______________________________________________________'"/></span>
+                                <span>التوقيع</span>
+                            </td>
+                            <td colspan="2"/>
+                            <td>
+                                <span>
 
+
+                                        Page:
+                                        <span class="page"/>
+                                        /
+                                        <span class="topage"/>
+
+
+
+                                </span>
+                            </td>
+                        </tr>
                     </table>
                 </div>
 
-                <br/>
 
-               <span>Signature</span>
-                    <span><t t-esc="'_______________________________________________________'"/></span>
-                    <span>التوقيع</span>
+                <br/>
 
                     </div>
 

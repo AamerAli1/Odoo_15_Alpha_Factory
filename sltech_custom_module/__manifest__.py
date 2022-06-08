@@ -23,7 +23,7 @@
         'depends': [
                 'sale',
                 'purchase',
-                'account',
+                'account_accountant',
                 'stock_landed_costs'
         ],
 

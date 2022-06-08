@@ -7,6 +7,7 @@ class AmountDistribution(models.TransientModel):
     _name = "amount.distribution"
 
     service_charge_ids = fields.Many2many('account.move', string="Service Charge Ids")
+    invoice_charge_ids = fields.Many2many('account.move', 'invoice_charge_ids_rel', 'col1', 'col2', string="Invoice Charge Ids")
     service_charge_line_ids = fields.One2many('service.charge.line', 'service_charge_id', 'Move Lines')
     distribution_line_ids = fields.One2many('amount.distribution.line', 'distribution_id', 'Distribution Line')
 
@@ -32,17 +33,35 @@ class AmountDistribution(models.TransientModel):
         lines = [(5, 0)]
         for move_id in self.service_charge_ids.browse(self.service_charge_ids.ids):
             for line in move_id.invoice_line_ids:
+                if (line.price_unit - line.sltech_price_unit) > 0:
+                    lines.append((0, 0, {
+                        'product_id': line.product_id.id,
+                        'slip_type': line.name,
+                        'invoice_no': move_id.name,
+                        'date': move_id.invoice_date,
+                        'distribution_type': 'equal',
+                        'amount': line.price_unit - line.sltech_price_unit,
+                        'amount_to_distribute': line.price_unit - line.sltech_price_unit,
+                        'line_id': line.id,
+                    }))
+        self.service_charge_line_ids = lines
+
+    @api.onchange('invoice_charge_ids')
+    def _on_invoice_charge_ids_selected(self):
+        lines = [(5, 0)]
+        for move_id in self.invoice_charge_ids.browse(self.invoice_charge_ids.ids):
+            for line in move_id.invoice_line_ids:
                 lines.append((0, 0, {
-                    'product_id': line.product_id.id,
-                    'slip_type': line.name,
                     'invoice_no': move_id.name,
                     'date': move_id.invoice_date,
-                    'distribution_type': 'equal',
-                    'amount': line.price_unit - line.sltech_price_unit,
-                    'amount_to_distribute': line.price_unit - line.sltech_price_unit,
+                    'item_name': line.product_id.name,
+                    'item_no': line.product_id.default_code,
+                    'quantity': line.quantity,
+                    'unit_price': line.price_unit,
+                    'move_id': move_id.id,
                     'line_id': line.id,
                 }))
-        self.service_charge_line_ids = lines
+        self.distribution_line_ids = lines
 
     def action_save(self):
         bill_ids = set([x.move_id for x in self.distribution_line_ids if x.is_distribute])
@@ -62,26 +81,36 @@ class AmountDistribution(models.TransientModel):
             for service_line in service_lines:
                 service_line[2]['price_unit'] = sum_lines_price
 
-            is_created = bill_id.write({
-                'invoice_line_ids': service_lines,
-                'invoice_date': datetime.datetime.now()
+            landed_costs = self.env['stock.landed.cost'].create({
+                'vendor_bill_id': bill_id.id,
+                'cost_lines': [(0, 0, {
+                    'product_id': l.product_id.id,
+                    'name': l.product_id.name,
+                    'account_id': l.line_id.account_id.id,
+                    'price_unit': l.amount_to_distribute,
+                    'split_method': l.distribution_type,
+                }) for l in self.service_charge_line_ids],
             })
-            if is_created:
-                landed_costs_id = bill_id.button_create_landed_costs()
-                landed_costs_obj = self.env['stock.landed.cost'].browse(landed_costs_id['res_id'])
-                picking_ids = self.env['purchase.order'].search([('invoice_ids', 'in', bill_id.ids)]).picking_ids.ids
 
-                landed_costs_obj.write({
-                    'picking_ids': [(6, 0, picking_ids)]
-                })
-                landed_costs_obj = landed_costs_obj.with_context(product_ids=no_distribute_products)
-                landed_costs_obj.button_validate()
+
+            landed_costs_obj = self.env['stock.landed.cost'].browse(landed_costs.id)
+            picking_ids = self.env['purchase.order'].search([('invoice_ids', 'in', bill_id.ids)]).picking_ids.ids
+
+            landed_costs_obj.write({
+                'picking_ids': [(6, 0, picking_ids)]
+            })
+            landed_costs_obj = landed_costs_obj.with_context(product_ids=no_distribute_products)
+            landed_costs_obj.button_validate()
         # amount distribute log
         for charge in self.service_charge_line_ids:
             current_price = charge.line_id.sltech_price_unit
             charge.line_id.update({
                 'sltech_price_unit': current_price + charge.amount_to_distribute
             })
+
+        for rec in self.service_charge_ids:
+            rec.service_amount_remaining = sum(
+                (line.price_unit - line.sltech_price_unit) for line in rec.invoice_line_ids)
 
 
 class AmountDistributionLine(models.TransientModel):
@@ -107,7 +136,7 @@ class ServiceChargeLine(models.TransientModel):
 
     service_charge_id = fields.Many2one('amount.distribution', 'service charge Id')
 
-    product_id = fields.Integer("Product id")
+    product_id = fields.Many2one("product.product")
     slip_type = fields.Char("Slip Type")
     invoice_no = fields.Char("Invoice No")
     date = fields.Date("Date")

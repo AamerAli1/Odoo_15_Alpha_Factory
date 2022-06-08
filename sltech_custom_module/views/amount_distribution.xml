@@ -7,14 +7,20 @@
             <form string="Amount Distribution">
                 <sheet>
                     <group>
+                        <group>
                         <field name="service_charge_ids" widget="many2many_tags"
-                               domain="[('is_service_charge', '=', True)]"/>
+                               domain="[('is_service_charge', '=', True), ('service_amount_remaining', '>', 0)]" force_save="1"/>
+                    </group>
+                        <group>
+                        <field name="invoice_charge_ids" widget="many2many_tags"
+                               domain="[('move_type', '=', 'in_invoice'),('is_service_charge', '!=', True)]" force_save="1"/>
+                    </group>
                     </group>
                     <group>
-                        <field name="service_charge_line_ids"/>
+                        <field name="service_charge_line_ids" force_save="1"/>
                     </group>
                     <group>
-                        <field name="distribution_line_ids"/>
+                        <field name="distribution_line_ids" force_save="1"/>
                     </group>
                 </sheet>
                 <footer>
@@ -31,16 +37,16 @@
         <field name="model">amount.distribution.line</field>
         <field name="arch" type="xml">
             <tree string="Amount Distribution Line" create="false" editable="bottom" delete="false">
-                <field name="invoice_no" readonly="1"/>
-                <field name="date" readonly="1"/>
-                <field name="item_name" readonly="1"/>
-                <field name="item_no" readonly="1"/>
-                <field name="quantity" readonly="1"/>
-                <field name="unit_price" readonly="1"/>
-                <field name="is_distribute"/>
-                <field name="will_distribute_amount"/>
-                <field name="move_id" invisible="1"/>
-                <field name="line_id" invisible="1"/>
+                <field name="invoice_no" readonly="1" force_save="1"/>
+                <field name="date" readonly="1" force_save="1"/>
+                <field name="item_name" readonly="1" force_save="1"/>
+                <field name="item_no" readonly="1" force_save="1"/>
+                <field name="quantity" readonly="1" force_save="1"/>
+                <field name="unit_price" readonly="1" force_save="1"/>
+                <field name="is_distribute" force_save="1"/>
+                <field name="will_distribute_amount" force_save="1"/>
+                <field name="move_id" invisible="1" force_save="1"/>
+                <field name="line_id" invisible="1" force_save="1"/>
             </tree>
         </field>
     </record>
@@ -50,14 +56,14 @@
         <field name="model">service.charge.line</field>
         <field name="arch" type="xml">
             <tree string="Amount Distribution Line" create="false" editable="bottom" delete="false">
-                <field name="slip_type" readonly="1"/>
-                <field name="invoice_no" readonly="1"/>
-                <field name="date" readonly="1"/>
-                <field name="distribution_type"/>
-                <field name="amount" readonly="1"/>
-                <field name="amount_to_distribute"/>
-                <field name="product_id" invisible="1" />
-                <field name="line_id" invisible="1"/>
+                <field name="product_id" readonly="1"  force_save="1"/>
+                <field name="slip_type" readonly="1" force_save="1"/>
+                <field name="invoice_no" readonly="1" force_save="1"/>
+                <field name="date" readonly="1" force_save="1"/>
+                <field name="distribution_type" force_save="1"/>
+                <field name="amount" readonly="1" force_save="1"/>
+                <field name="amount_to_distribute" force_save="1"/>
+                <field name="line_id" invisible="1" force_save="1"/>
 
             </tree>
         </field>

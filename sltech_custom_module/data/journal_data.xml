@@ -2,7 +2,7 @@
     <data>
         <record id="sltech_service_charge_journal" model="account.journal">
             <field name="name">Service Charge</field>
-            <field name="type">sale</field>
+            <field name="type">purchase</field>
             <field name="code">SCI</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="invoice_reference_model">odoo</field>

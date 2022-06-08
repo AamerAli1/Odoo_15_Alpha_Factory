@@ -25,6 +25,13 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     is_service_charge = fields.Boolean(string='Is Service Charge', default=False)
+    service_amount_remaining = fields.Float('Amount Remaining', compute='sltech_compute_remaining_service_charge_amount', store=True)
+
+    @api.depends('invoice_line_ids.sltech_price_unit')
+    def sltech_compute_remaining_service_charge_amount(self):
+        for rec in self:
+            if rec.is_service_charge:
+                rec.service_amount_remaining = sum((line.price_unit - line.sltech_price_unit) for line in rec.invoice_line_ids)
 
     @api.onchange('journal_id')
     def _change_is_service_charge(self):
@@ -39,13 +46,13 @@ class AccountMove(models.Model):
 
         lines = []
         for res in self:
-            if res.is_service_charge:
+            if res.is_service_charge or res.move_type != 'in_invoice':
                 raise UserError(_(
                     "Can not select service charge invoices!!."
                 ))
-            if res.state not in ['draft']:
+            if res.state not in ['posted']:
                 raise UserError(_(
-                    "Please select only draft invoices!!"
+                    "Please select only posted invoices!!"
                 ))
             for line in res.invoice_line_ids:
                 lines.append((0, 0, {
@@ -68,14 +75,15 @@ class AccountMove(models.Model):
             'context': {
                 'active_model': 'account.move',
                 'active_ids': self.ids,
-                'default_distribution_line_ids': lines
+                'default_distribution_line_ids': lines,
+                'default_invoice_charge_ids': self.ids
             },
         }
 
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    sltech_price_unit = fields.Float("Amount Already Used")
+    sltech_price_unit = fields.Float("Amount Already Used", copy=False)
 
 
 
