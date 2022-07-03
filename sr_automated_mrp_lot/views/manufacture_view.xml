@@ -8,9 +8,9 @@
 
    <field name = "bom_id"  position = "after" >
 
-       <field name="grinding_quality" ></field>
+      <field name="grinding_quality" ></field>
        <field name="viscosity" ></field>
-       <field name="delta_e" ></field>
+      <field name="delta_e" ></field>
        <field name="respName" ></field>
 
    </field>

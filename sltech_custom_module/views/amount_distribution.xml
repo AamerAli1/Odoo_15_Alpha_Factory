@@ -42,11 +42,22 @@
                 <field name="item_name" readonly="1" force_save="1"/>
                 <field name="item_no" readonly="1" force_save="1"/>
                 <field name="quantity" readonly="1" force_save="1"/>
+                <field name="weight" optional="hide" readonly="1" force_save="1"/>
+                <field name="volume" optional="hide" readonly="1" force_save="1"/>
+                <field name="former_cost" optional="hide" readonly="1" force_save="1"/>
+
                 <field name="unit_price" readonly="1" force_save="1"/>
                 <field name="is_distribute" force_save="1"/>
-                <field name="will_distribute_amount" force_save="1"/>
+                <field name="will_distribute_amount" force_save="1" sum="Total"/>
                 <field name="move_id" invisible="1" force_save="1"/>
                 <field name="line_id" invisible="1" force_save="1"/>
+
+                <field name="equal_qty" optional="hide" force_save="1"/>
+                <field name="by_quantity_qty" optional="hide" force_save="1"/>
+                <field name="by_current_cost_price_qty" optional="hide" force_save="1"/>
+                <field name="by_weight_qty" optional="hide" force_save="1"/>
+                <field name="by_volume_qty" optional="hide" force_save="1"/>
+
             </tree>
         </field>
     </record>
@@ -62,7 +73,7 @@
                 <field name="date" readonly="1" force_save="1"/>
                 <field name="distribution_type" force_save="1"/>
                 <field name="amount" readonly="1" force_save="1"/>
-                <field name="amount_to_distribute" force_save="1"/>
+                <field name="amount_to_distribute" force_save="1" sum="Total"/>
                 <field name="line_id" invisible="1" force_save="1"/>
 
             </tree>

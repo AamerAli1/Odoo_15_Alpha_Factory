@@ -30,8 +30,9 @@
     'author': "Sitaram",
     'website':"www.sitaramsolutions.in",
     'depends': ['base', 'sale', 'sale_management',
-        'account', 'account_accountant', 'account_reports'],
+        'account', 'account_accountant', 'account_reports','mrp'],
     'data': [
+        # 'views/stock_move_view.xml',
 	    'views/mrp_customer_view.xml',
         'views/bom_customer_view.xml',
 	    'reports/ak_mrp_workorder_report.xml',

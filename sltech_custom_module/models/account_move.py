@@ -61,6 +61,11 @@ class AccountMove(models.Model):
                     'item_name': line.product_id.name,
                     'item_no': line.product_id.default_code,
                     'quantity': line.quantity,
+
+                    'weight': line.product_id.weight * line.quantity,
+                    'volume': line.product_id.volume * line.quantity,
+                    'former_cost': sum(line.purchase_line_id.move_ids.stock_valuation_layer_ids.mapped('value')),
+
                     'unit_price': line.price_unit,
                     'move_id': res.id,
                     'line_id': line.id,
