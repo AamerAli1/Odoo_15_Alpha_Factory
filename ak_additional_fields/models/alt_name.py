@@ -1,9 +1,9 @@
 from odoo import models, api, _, _lt, fields
 
 class Partnerpage(models.Model):
-    _inherit = 'res.partner'
+    _inherit = 'business.appointment'
 
-    altName = fields.Char(string="Alternative Name")
-    partnerCode = fields.Char(string="Code")
+    checkin = fields.Char(string="Alternative Name")
+    partnerCode = fields.Boolean(string="Check in")
 
 

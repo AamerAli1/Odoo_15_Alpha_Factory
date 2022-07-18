@@ -148,9 +148,20 @@ class AmountDistribution(models.TransientModel):
                     'is_landed_costs_line': True,
                 }))
             for bill_id in bill_ids:
-                no_distribute_products = [x.line_id.product_id.id for x in self.distribution_line_ids if x.move_id == bill_id and not x.is_distribute]
-                sum_lines_price = sum([x.will_distribute_amount for x in self.distribution_line_ids if
-                                          x.move_id == bill_id and x.is_distribute])
+                no_distribute_products = []
+                sum_lines_price = 0
+                for x in self.distribution_line_ids:
+                    if x.move_id == bill_id:
+                        if x.line_id.product_id.id in bill_id.landed_costs_ids.mapped('valuation_adjustment_lines').mapped('product_id').ids:
+                            raise UserError(_(
+                                "%s bill is already have landed cost!!"%bill_id.name
+                            ))
+                        if x.is_distribute:
+                            sum_lines_price += x.will_distribute_amount
+                        else:
+                            no_distribute_products.append(x.line_id.product_id.id)
+                # no_distribute_products = [x.line_id.product_id.id for x in self.distribution_line_ids if x.move_id == bill_id and not x.is_distribute]
+                # sum_lines_price = sum([x.will_distribute_amount for x in self.distribution_line_ids if x.move_id == bill_id and x.is_distribute])
                 # update price
                 for service_line in service_lines:
                     service_line[2]['price_unit'] = sum_lines_price

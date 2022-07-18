@@ -48,12 +48,16 @@ class AccountMove(models.Model):
         for res in self:
             if res.is_service_charge or res.move_type != 'in_invoice':
                 raise UserError(_(
-                    "Can not select service charge invoices!!."
+                    "Can not select service charge bills!!."
                 ))
             if res.state not in ['posted']:
                 raise UserError(_(
-                    "Please select only posted invoices!!"
+                    "Please select only posted bills!!"
                 ))
+            # if res.landed_costs_ids:
+            #     raise UserError(_(
+            #         "%s bill is already have landed cost!!"%res.name
+            #     ))
             for line in res.invoice_line_ids:
                 lines.append((0, 0, {
                     'invoice_no': res.name,
