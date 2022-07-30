@@ -20,5 +20,5 @@ class ResCurrency(models.Model):
         if self._context.get('active_manutal_currency'):
             res = self._context.get('manual_rate')
         else:
-            res = currency_rates.get(to_currency.id) / currency_rates.get(from_currency.id)
+            res = (1/currency_rates.get(to_currency.id)) / (1/currency_rates.get(from_currency.id) )
         return res

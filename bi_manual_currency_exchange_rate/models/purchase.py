@@ -45,7 +45,7 @@ class PurchaseOrderLine(models.Model):
 			price_unit = seller.product_uom._compute_price(price_unit, self.product_uom)
 		
 		if self.order_id.purchase_manual_currency_rate_active:
-			price_unit = self.order_id.currency_id.round((self.price_unit)/self.order_id.purchase_manual_currency_rate)
+			price_unit = self.order_id.currency_id.round((self.price_unit)/(1/self.order_id.purchase_manual_currency_rate))
 		
 		for line in rec:
 			line.update({'price_unit' : price_unit})
@@ -87,7 +87,7 @@ class PurchaseOrderLine(models.Model):
 				)
 
 			if self.order_id.purchase_manual_currency_rate_active:
-				price_unit = self.product_id.standard_price * self.order_id.purchase_manual_currency_rate
+				price_unit = self.product_id.standard_price *(1/ self.order_id.purchase_manual_currency_rate)
 
 			self.price_unit = price_unit
 			return
@@ -101,6 +101,6 @@ class PurchaseOrderLine(models.Model):
 			price_unit = seller.product_uom._compute_price(price_unit, self.product_uom)
 
 		if self.order_id.purchase_manual_currency_rate_active:
-			price_unit = self.product_id.standard_price * self.order_id.purchase_manual_currency_rate
+			price_unit = self.product_id.standard_price *(1/ self.order_id.purchase_manual_currency_rate)
 
 		self.price_unit = price_unit
