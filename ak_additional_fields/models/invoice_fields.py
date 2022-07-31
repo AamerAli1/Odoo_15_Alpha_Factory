@@ -4,6 +4,7 @@ class Partnerpage(models.Model):
     _inherit = 'account.move'
     vendor_po = fields.Char(string="client PO Number")
     branch_name = fields.Char(string = "Branch Name")
+    invoice_number = fields.Char(string = "invoice Number")
 
 
 class invoiceLine(models.Model):

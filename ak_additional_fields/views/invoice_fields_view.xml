@@ -9,6 +9,7 @@
    <xpath expr = "//group[@id='header_left_group'][1]/field[2]"  position = "after" >
        <field name="vendor_po" ></field>
        <field name="branch_name"></field>
+       <field name="invoice_number"></field>
    </xpath>
 
  </field>
