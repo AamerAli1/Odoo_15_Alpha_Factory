@@ -138,7 +138,7 @@
                             <td>
                                 <span>P.O.No: -</span>
                             </td>
-                            <td>
+                            <td t-if="o.get_invoice_number()">
                                    <t t-esc="o.get_invoice_number().vendor_po"/>
                             </td>
                             <td>

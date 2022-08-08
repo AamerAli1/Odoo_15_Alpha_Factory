@@ -39,8 +39,8 @@
                                             <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', raw_line.product_id.barcode, 600, 100)" style="width:100%;height:35px" alt="Barcode"/>
                                         </t>
                                     </td>
-                                    <td t-if="raw_line.lot_ids.display_name">
-                                        <span t-field="raw_line.lot_ids.display_name"/>
+                                   <td t-if="raw_line.lot_ids">
+                                        <span t-field="raw_line.lot_ids[0].display_name"/>
                                     </td>
                                 </tr>
                             </t>
