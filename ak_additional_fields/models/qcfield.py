@@ -28,9 +28,6 @@ class stock_move(models.Model):
     _inherit = 'stock.move'
 
     def split_quantity_cal(self):
-        print("----------------------------------------------------------------------------")
-        print(self.product_uom_qty)
-        print(self.raw_material_production_id)
         return self.product_uom_qty / self.raw_material_production_id.split_number
 
 
