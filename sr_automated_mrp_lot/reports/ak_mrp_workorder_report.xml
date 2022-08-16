@@ -55,12 +55,10 @@
               <strong>Finished Product:</strong><br/>
                 <span t-field="o.product_id"/><br/>
               <strong>Lot:</strong>
-              <t t-if="o.finished_move_line_ids">
-                                <tr t-foreach="o.finished_move_line_ids" t-as="finish_line">
+              <t t-if="o.lot_producing_id">
                                     <td>
-                                        <span t-field="finish_line.lot_id"/>
+                                        <span t-field="o.lot_producing_id"/>
                                     </td>
-                                </tr>
                             </t>
           </div>
 
