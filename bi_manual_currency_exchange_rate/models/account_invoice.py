@@ -148,7 +148,7 @@ class account_invoice_line(models.Model):
 		amount_currency = price_subtotal * sign
 
 		if self.move_id.manual_currency_rate_active and self.move_id.manual_currency_rate > 0:
-			currency_rate = company.currency_id.rate / (1/self.move_id.manual_currency_rate)
+			currency_rate = company.currency_id.rate / self.move_id.manual_currency_rate
 			balance = amount_currency*currency_rate
 
 		else:
@@ -169,7 +169,7 @@ class account_invoice_line(models.Model):
 		for line in self:
 			company = line.move_id.company_id
 			if line.move_id.manual_currency_rate_active and line.move_id.manual_currency_rate > 0:
-				currency_rate = company.currency_id.rate / (1/ line.move_id.manual_currency_rate )
+				currency_rate = company.currency_id.rate / line.move_id.manual_currency_rate 
 				balance = line.amount_currency*currency_rate
 
 			else:
@@ -192,7 +192,7 @@ class account_invoice_line(models.Model):
 				line._onchange_price_subtotal()
 			elif not line.move_id.reversed_entry_id:
 				if line.move_id.manual_currency_rate_active and line.move_id.manual_currency_rate > 0:
-					currency_rate = company.currency_id.rate / (1/line.move_id.manual_currency_rate )
+					currency_rate = company.currency_id.rate / line.move_id.manual_currency_rate 
 					balance = line.amount_currency*currency_rate
 				else:
 					balance = line.currency_id._convert(line.amount_currency, company.currency_id, company, line.move_id.date or fields.Date.context_today(line))
