@@ -94,8 +94,6 @@ class AccountMoveLine(models.Model):
 
     sltech_price_unit = fields.Float("Amount Already Used", copy=False)
 
-
-
 class StockLandedCost(models.Model):
     _inherit = 'stock.landed.cost'
 
