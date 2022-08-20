@@ -21,7 +21,8 @@ class stock_move(models.Model):
 			for line in self:
 				if line.purchase_line_id :
 					if line.purchase_line_id.order_id.purchase_manual_currency_rate_active:
-						price_unit = line.purchase_line_id.order_id.currency_id.round((line.purchase_line_id.price_unit)/line.purchase_line_id.order_id.purchase_manual_currency_rate)
+						#price_unit = line.purchase_line_id.order_id.currency_id.round((line.purchase_line_id.price_unit)/line.purchase_line_id.order_id.purchase_manual_currency_rate)
+						price_unit = line.purchase_line_id.order_id.currency_id.round((line.purchase_line_id.price_unit)*line.purchase_line_id.order_id.purchase_manual_currency_rate)
 
 						rc.write({'unit_cost' : price_unit,'value' :price_unit * rc.quantity,'remaining_value' : price_unit * rc.quantity})
 		return rec
@@ -62,7 +63,8 @@ class stock_move(models.Model):
 		valuation_partner_id = self._get_partner_id_for_valuation_lines()
 
 		if self.purchase_line_id.order_id.purchase_manual_currency_rate_active:
-			debit_value = self.purchase_line_id.order_id.currency_id.round((self.purchase_line_id.price_unit*qty)/self.purchase_line_id.order_id.purchase_manual_currency_rate or 1)
+			#debit_value = self.purchase_line_id.order_id.currency_id.round((self.purchase_line_id.price_unit*qty)/self.purchase_line_id.order_id.purchase_manual_currency_rate or 1)
+			debit_value = self.purchase_line_id.order_id.currency_id.round((self.purchase_line_id.price_unit*qty)*self.purchase_line_id.order_id.purchase_manual_currency_rate or 1)
 			credit_value = debit_value
 			res = [(0, 0, line_vals) for line_vals in self._generate_valuation_lines_data(valuation_partner_id, qty, debit_value, credit_value, debit_account_id, credit_account_id, description).values()]
 
@@ -70,7 +72,8 @@ class stock_move(models.Model):
 			res = [(0, 0, line_vals) for line_vals in self._generate_valuation_lines_data(valuation_partner_id, qty, debit_value, credit_value, debit_account_id, credit_account_id, description).values()]
 
 		if self.sale_line_id.order_id.sale_manual_currency_rate_active:
-			credit_value = 	self.sale_line_id.order_id.currency_id.round((self.sale_line_id.price_unit*qty)/self.sale_line_id.order_id.sale_manual_currency_rate or 1)
+			#credit_value = 	self.sale_line_id.order_id.currency_id.round((self.sale_line_id.price_unit*qty)/self.sale_line_id.order_id.sale_manual_currency_rate or 1)
+			credit_value = 	self.sale_line_id.order_id.currency_id.round((self.sale_line_id.price_unit*qty)*self.sale_line_id.order_id.sale_manual_currency_rate or 1)
 			debit_value = credit_value
 			res = [(0, 0, line_vals) for line_vals in self._generate_valuation_lines_data(valuation_partner_id, qty, debit_value, credit_value, debit_account_id, credit_account_id, description).values()]
 		else:
@@ -148,7 +151,8 @@ class account_invoice_line(models.Model):
 		amount_currency = price_subtotal * sign
 
 		if self.move_id.manual_currency_rate_active and self.move_id.manual_currency_rate > 0:
-			currency_rate = company.currency_id.rate / self.move_id.manual_currency_rate
+			#currency_rate = company.currency_id.rate / self.move_id.manual_currency_rate
+			currency_rate = company.currency_id.rate * self.move_id.manual_currency_rate
 			balance = amount_currency*currency_rate
 
 		else:
@@ -169,7 +173,8 @@ class account_invoice_line(models.Model):
 		for line in self:
 			company = line.move_id.company_id
 			if line.move_id.manual_currency_rate_active and line.move_id.manual_currency_rate > 0:
-				currency_rate = company.currency_id.rate / line.move_id.manual_currency_rate 
+				#currency_rate = company.currency_id.rate / line.move_id.manual_currency_rate 
+				currency_rate = company.currency_id.rate * line.move_id.manual_currency_rate
 				balance = line.amount_currency*currency_rate
 
 			else:
@@ -192,7 +197,8 @@ class account_invoice_line(models.Model):
 				line._onchange_price_subtotal()
 			elif not line.move_id.reversed_entry_id:
 				if line.move_id.manual_currency_rate_active and line.move_id.manual_currency_rate > 0:
-					currency_rate = company.currency_id.rate / line.move_id.manual_currency_rate 
+					#currency_rate = company.currency_id.rate / line.move_id.manual_currency_rate 
+					currency_rate = company.currency_id.rate * line.move_id.manual_currency_rate 
 					balance = line.amount_currency*currency_rate
 				else:
 					balance = line.currency_id._convert(line.amount_currency, company.currency_id, company, line.move_id.date or fields.Date.context_today(line))
@@ -205,7 +211,8 @@ class account_invoice_line(models.Model):
 		res = super(account_invoice_line, self)._get_computed_price_unit()
 		if self.move_id.manual_currency_rate_active and self.move_id.manual_currency_rate > 0:
 			price_unit = res;
-			currency_rate = self.move_id.manual_currency_rate/self.move_id.company_id.currency_id.rate
+			#currency_rate = self.move_id.manual_currency_rate/self.move_id.company_id.currency_id.rate
+			currency_rate = self.move_id.manual_currency_rate*self.move_id.company_id.currency_id.rate
 			if self.move_id.is_sale_document(include_receipts=True):
 				price_unit = self.product_id.lst_price
 			elif self.move_id.is_purchase_document(include_receipts=True):
@@ -344,7 +351,8 @@ class account_invoice(models.Model):
 
 			# tax_base_amount field is expressed using the company currency.
 			if self.manual_currency_rate_active and self.manual_currency_rate > 0:
-				currency_rate = self.company_currency_id.rate / self.manual_currency_rate
+				#currency_rate = self.company_currency_id.rate / self.manual_currency_rate
+				currency_rate = self.company_currency_id.rate * self.manual_currency_rate
 				tax_base_amount = taxes_map_entry['tax_base_amount'] * currency_rate
 			else:
 				tax_base_amount = currency._convert(taxes_map_entry['tax_base_amount'], self.company_currency_id, self.company_id, self.date or fields.Date.context_today(self))
@@ -356,7 +364,8 @@ class account_invoice(models.Model):
 				continue
 
 			if self.manual_currency_rate_active and self.manual_currency_rate > 0:
-				currency_rate = self.company_currency_id.rate / self.manual_currency_rate
+				#currency_rate = self.company_currency_id.rate / self.manual_currency_rate
+				currency_rate = self.company_currency_id.rate * self.manual_currency_rate
 				balance = taxes_map_entry['amount'] * currency_rate
 			else:
 				balance = currency._convert(

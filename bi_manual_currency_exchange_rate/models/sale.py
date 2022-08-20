@@ -61,7 +61,8 @@ class SaleOrderLine(models.Model):
         company = self.order_id.company_id
 
         if self.order_id.sale_manual_currency_rate_active:
-            currency_rate = self.order_id.sale_manual_currency_rate/company.currency_id.rate
+            # currency_rate = self.order_id.sale_manual_currency_rate/company.currency_id.rate
+            currency_rate = self.order_id.sale_manual_currency_rate*company.currency_id.rate
             price_unit = self.product_id.lst_price
             manual_currency_rate = price_unit * currency_rate            
             vals['price_unit'] = manual_currency_rate
@@ -104,7 +105,8 @@ class SaleOrderLine(models.Model):
 
         company = self.order_id.company_id
         if self.order_id.sale_manual_currency_rate_active:
-            currency_rate = self.order_id.sale_manual_currency_rate/company.currency_id.rate
+            # currency_rate = self.order_id.sale_manual_currency_rate/company.currency_id.rate
+            currency_rate = self.order_id.sale_manual_currency_rate*company.currency_id.rate
             price_unit = self.product_id.lst_price
             manual_currency_rate = price_unit * currency_rate
             self.price_unit = manual_currency_rate
