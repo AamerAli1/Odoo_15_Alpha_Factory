@@ -12,5 +12,5 @@ class CancelJournalEntries(models.TransientModel):
         """ cancel multiple journal entries from the tree view."""
         account_move_recs = self.env['account.move'].browse(
             self._context.get('active_ids'))
-        account_move_recs.button_cancel()
+        account_move_recs.button_draft()
         return True
