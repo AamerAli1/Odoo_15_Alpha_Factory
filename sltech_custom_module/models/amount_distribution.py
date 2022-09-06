@@ -163,12 +163,15 @@ class AmountDistribution(models.TransientModel):
                     for ln in line_dict_is_approve:
 
                         cost_lines.append({
-                            'product_id': ln.line_id.product_id.id,
-                            'name': ln.line_id.product_id.name,
+                            'product_id': line.product_id.id,
+                            'name': line.product_id.name,
                             'account_id': ln.line_id.account_id.id,
                             'price_unit': amt,
                             'split_method': line.distribution_type,
-                            'bill_id': ln.line_id.move_id.id
+                            'bill_id': ln.line_id.move_id.id,
+                            'currency_id': line.line_id.move_id.currency_id,
+                            'company_id': line.line_id.move_id.company_id,
+                            'service_id': line.line_id.move_id,
                         })
 
                         # line_dict_is_approve[ln][0] = line_dict_is_approve[ln][0] + amt
@@ -181,12 +184,15 @@ class AmountDistribution(models.TransientModel):
                     for ln in line_dict_is_approve:
 
                         cost_lines.append({
-                            'product_id': ln.line_id.product_id.id,
-                            'name': ln.line_id.product_id.name,
+                            'product_id': line.product_id.id,
+                            'name': line.product_id.name,
                             'account_id': ln.line_id.account_id.id,
                             'price_unit': amt * ln.quantity,
                             'split_method': line.distribution_type,
-                            'bill_id': ln.line_id.move_id.id
+                            'bill_id': ln.line_id.move_id.id,
+                            'currency_id': line.line_id.move_id.currency_id,
+                            'company_id': line.line_id.move_id.company_id,
+                            'service_id': line.line_id.move_id,
                         })
 
                         # line_dict_is_approve[ln][1] = line_dict_is_approve[ln][1] + amt * ln.quantity
@@ -201,12 +207,15 @@ class AmountDistribution(models.TransientModel):
                     for ln in line_dict_is_approve:
 
                         cost_lines.append({
-                            'product_id': ln.line_id.product_id.id,
-                            'name': ln.line_id.product_id.name,
+                            'product_id': line.product_id.id,
+                            'name': line.product_id.name,
                             'account_id': ln.line_id.account_id.id,
                             'price_unit': amt * ln.quantity,
                             'split_method': line.distribution_type,
-                            'bill_id': ln.line_id.move_id.id
+                            'bill_id': ln.line_id.move_id.id,
+                            'currency_id': line.line_id.move_id.currency_id,
+                            'company_id': line.line_id.move_id.company_id,
+                            'service_id': line.line_id.move_id,
                         })
 
                         # line_dict_is_approve[ln][2] = line_dict_is_approve[ln][2] + amt * ln.quantity
@@ -221,12 +230,15 @@ class AmountDistribution(models.TransientModel):
                     for ln in line_dict_is_approve:
 
                         cost_lines.append({
-                            'product_id': ln.line_id.product_id.id,
-                            'name': ln.line_id.product_id.name,
+                            'product_id': line.product_id.id,
+                            'name': line.product_id.name,
                             'account_id': ln.line_id.account_id.id,
                             'price_unit': amt * ln.weight,
                             'split_method': line.distribution_type,
-                            'bill_id': ln.line_id.move_id.id
+                            'bill_id': ln.line_id.move_id.id,
+                            'currency_id': line.line_id.move_id.currency_id,
+                            'company_id': line.line_id.move_id.company_id,
+                            'service_id': line.line_id.move_id,
                         })
 
                         # line_dict_is_approve[ln][3] = line_dict_is_approve[ln][3] + amt * ln.weight
@@ -241,12 +253,15 @@ class AmountDistribution(models.TransientModel):
                     for ln in line_dict_is_approve:
 
                         cost_lines.append({
-                            'product_id': ln.line_id.product_id.id,
-                            'name': ln.line_id.product_id.name,
+                            'product_id': line.product_id.id,
+                            'name': line.product_id.name,
                             'account_id': ln.line_id.account_id.id,
                             'price_unit': amt * ln.volume,
                             'split_method': line.distribution_type,
-                            'bill_id': ln.line_id.move_id.id
+                            'bill_id': ln.line_id.move_id.id,
+                            'currency_id': line.line_id.move_id.currency_id,
+                            'company_id': line.line_id.move_id.company_id,
+                            'service_id': line.line_id.move_id,
                         })
 
                         # line_dict_is_approve[ln][4] = line_dict_is_approve[ln][4] + amt * ln.volume
@@ -294,11 +309,12 @@ class AmountDistribution(models.TransientModel):
 
                 bill_ids = {}
                 for cl in cost_lines:
+                    currency_amt = cl['currency_id']._convert(cl['price_unit'], cl['company_id'].currency_id, cl['company_id'], cl['service_id'].invoice_date)
                     temp = {
                         'product_id': cl['product_id'],
                         'name': cl['name'],
                         'account_id': cl['account_id'],
-                        'price_unit': cl['price_unit'],
+                        'price_unit': currency_amt,
                         'split_method': cl['split_method'],
                     }
                     if not bill_ids.get(cl['bill_id']):
