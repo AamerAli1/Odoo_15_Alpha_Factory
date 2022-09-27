@@ -267,12 +267,13 @@
 									 <span><t t-esc="'%.2f'% line.quantity"/></span>
 								</td>
 								<td style="text-align: center; padding: 5px; border: 1px solid black; border-collapse: collapse;">
+                                <t t-set = "value" t-value="line.quantity * line.price_unit" />
 
                                     <span><t t-esc="'%.5f'% line.price_unit"/></span>
 								</td>
 
 								<td style="text-align: center; padding: 5px; border: 1px solid black; border-collapse: collapse;">
-									     <span><t t-esc="'%.2f'% line.price_subtotal"/></span>
+									     <span><t t-esc="'%.2f'% value"/></span>
 								</td>
 
 							</tr>
@@ -314,7 +315,7 @@
                             <td style="text-align: center;border: 1px solid black;">
                                 <span>
                                     <t t-esc="o.currency_id.symbol"/>
-                                    <t t-esc="'%.2f'% o.discount_amt"/>
+                                    <t t-esc="'%.2f'% o.discount_total"/>
                                 </span>
                             </td>
                         </tr>
@@ -328,7 +329,7 @@
                             <td>&amp;nbsp;</td>
                             <td style="text-align: center;border: 1px solid black;">
                                 <span>
-                                    <t t-set = "untaxed_amount" t-value="o.amount_untaxed - o.discount_amt" />
+                                    <t t-set = "untaxed_amount" t-value="o.amount_untaxed" />
                                     <t t-esc="o.currency_id.symbol"/>
                                     <t t-esc="'%.2f'% untaxed_amount"/>
                                 </span>

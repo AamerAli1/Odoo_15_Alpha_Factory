@@ -317,7 +317,7 @@
                             <td style="text-align: center;border: 1px solid black;">
                                 <span>
                                     <t t-esc="o.currency_id.symbol"/>
-                                    <t t-esc="'%.2f'% o.discount_amt"/>
+                                    <t t-esc="'%.2f'% o.discount_total"/>
                                 </span>
                             </td>
                         </tr>
@@ -331,7 +331,7 @@
                             <td>&amp;nbsp;</td>
                             <td style="text-align: center;border: 1px solid black;">
                                 <span>
-                                    <t t-set = "untaxed_amount" t-value="o.amount_untaxed - o.discount_amt" />
+                                    <t t-set = "untaxed_amount" t-value="o.amount_untaxed" />
                                     <t t-esc="o.currency_id.symbol"/>
                                     <t t-esc="'%.2f'% untaxed_amount"/>
                                 </span>

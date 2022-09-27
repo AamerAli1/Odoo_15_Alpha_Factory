@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    SLTECH ERP SOLUTION
-#    Copyright (C) 2020-Today(www.slecherpsolution.com).
+#    Copyright (C) 2022-Today(www.slecherpsolution.com).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,6 +18,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import account_move
-from . import stock_picking
-from . import account_invoice
+from odoo import api, fields, models, _, tools
+from odoo.exceptions import UserError
+
+class AccountMove(models.Model):
+    _inherit = "account.move"
+
+    def _get_reconciled_vals(self, partial, amount, counterpart_line):
+        res = super(AccountMove, self)._get_reconciled_vals(partial=partial, amount=amount, counterpart_line=counterpart_line)
+        res['ref'] = counterpart_line.move_id.payment_id.sltech_name
+        return res

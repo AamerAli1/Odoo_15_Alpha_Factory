@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    SLTECH ERP SOLUTION
-#    Copyright (C) 2020-Today(www.slecherpsolution.com).
+#    Copyright (C) 2022-Today(www.slecherpsolution.com).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,6 +18,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import account_move
-from . import stock_picking
-from . import account_invoice
+from odoo import api, fields, models, _, tools
+from odoo.exceptions import UserError
+
+class AccountPayment(models.Model):
+    _inherit = "account.payment"
+
+    sltech_name = fields.Char('Payment Reference', readonly=True)
+
+    @api.model
+    def create(self, vals):
+        payment_type = vals.get('payment_type', '')
+        code = ''
+        if payment_type == 'outbound':
+            code = 'account.payment.customer.invoice'
+        elif payment_type == 'inbound':
+            code = 'account.payment.supplier.invoice'
+        if code:
+            vals['sltech_name'] = self.env['ir.sequence'].next_by_code(code)
+        return super(AccountPayment, self).create(vals)

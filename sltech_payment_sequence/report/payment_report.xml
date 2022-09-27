@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <template id="accountreport_payment_receipt_document" inherit_id="account.report_payment_receipt_document">
+            <xpath expr="//span[@t-field='o.name']" position="replace">
+                <span t-field="o.sltech_name"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>
