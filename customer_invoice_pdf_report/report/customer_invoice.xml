@@ -5,10 +5,6 @@
         <template id="sltech_invoice_body">
             <t t-set="get_sale_details" t-value="o.get_sale_details()"/>
             <div class="cus_en">
-
-
-
-
                 <table style="font-size:14px; border: 1px solid black;width: 100%" >
                     <tr>
                         <td  colspan="3"/>

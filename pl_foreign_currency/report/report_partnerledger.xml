@@ -7,13 +7,13 @@
 				<t t-foreach="docs" t-as="o">
 					<t t-call="web.external_layout">
 						<div class="page">
-							<h2>Statement of Accounts</h2>
+							<h2 style = 'text-align:center'>Statement of Accounts</h2>
 							<div class="row">
-								<div class="col-3">
+								<div class="col-5">
 									<strong>Partner:</strong>
-									<p t-esc="o.name" />
+									<span t-esc="o.name" />
 								</div>
-								<div class="col-3"
+								<div class="col-5"
 									t-if="data['form']['date_from'] or data['form']['date_to']">
 									<t t-if="data['form']['date_from']">
 										<strong>Date from :</strong>
@@ -26,7 +26,7 @@
 								</div>
 							</div>
 							<br/>
-							<br/>
+						
 							<t t-foreach="get_lines(data,o)" t-as="cu">
 								<h3 style = "display: inline;">Currency: </h3>
 								<h3 style = "display: inline;" t-esc="cu['cu'].name"/> 
