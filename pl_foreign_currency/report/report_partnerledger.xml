@@ -7,9 +7,6 @@
 				<t t-foreach="docs" t-as="o">
 					<t t-call="web.external_layout">
 						<div class="page">
-							<h4 style = 'text-align:right'>
-								Date: <t t-esc="datetime.datetime.today().date()"/>
-							</h4>
 							<h2 style = 'text-align:center'>Statement of Accounts</h2>
 							<div class="row">
 								<div class="col-6">
@@ -33,7 +30,9 @@
 							<t t-foreach="get_lines(data,o)" t-as="cu">
 								<h3 style = "display: inline;">Currency: </h3>
 								<h3 style = "display: inline;" t-esc="cu['cu'].name"/>
-
+								<h4 style = 'display: inline; text-align:right'>
+									Date: <t t-esc="datetime.datetime.today().date()"/>
+								</h4>
 								<table
 									class="table  table-bordered table-striped table-hover">
 									<thead>
