@@ -9,11 +9,11 @@
 						<div class="page">
 							<h2 style = 'text-align:center'>Statement of Accounts</h2>
 							<div class="row">
-								<div class="col-5">
+								<div class="col-6">
 									<strong>Partner:</strong>
 									<span t-esc="o.name" />
 								</div>
-								<div class="col-5"
+								<div class="col-6" style="text-align:right;padding-left:50px;"
 									t-if="data['form']['date_from'] or data['form']['date_to']">
 									<t t-if="data['form']['date_from']">
 										<strong>Date from :</strong>
@@ -26,10 +26,10 @@
 								</div>
 							</div>
 							<br/>
-						
+
 							<t t-foreach="get_lines(data,o)" t-as="cu">
 								<h3 style = "display: inline;">Currency: </h3>
-								<h3 style = "display: inline;" t-esc="cu['cu'].name"/> 
+								<h3 style = "display: inline;" t-esc="cu['cu'].name"/>
 
 								<table
 									class="table  table-bordered table-striped table-hover">
@@ -74,7 +74,7 @@
 												t-value="cu['bal']['debit'] - cu['bal']['credit']" />
 											<t t-else="" t-set="bal" t-value="0.0" />
 
-											<tr 
+											<tr
 												t-foreach="cu['lines']" t-as="line" t-if="line['date']">
 												<td>
 													<span t-esc="line['date']" />
@@ -90,11 +90,15 @@
 
 
 												<td>
+													<t t-set="invoice_number" t-value="o.invoice_ids.filtered(lambda obj :obj.name == line['name']).invoice_number"/>
 													<span t-esc="line['ref']" />
-													
+													<t t-if="invoice_number">
+														<span t-esc="invoice_number" />
+													</t>
+
 												</td>
 
-												
+
 												<td>
 													<t t-if="line['name']">
 
