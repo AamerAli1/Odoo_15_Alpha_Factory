@@ -10,6 +10,7 @@
     'depends': ['base', 'account', 'account_reports'],
     'data': ['wizard/account_report_partner_ledger_view.xml',
              'report/report_partnerledger.xml',
+             'report/web_external_layout.xml',
              ],
     'images':  ["static/description/image.png"],
     'price': 80,
