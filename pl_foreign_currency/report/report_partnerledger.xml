@@ -30,7 +30,7 @@
 							<t t-foreach="get_lines(data,o)" t-as="cu">
 								<h3 style = "display: inline;">Currency: </h3>
 								<h3 style = "display: inline;" t-esc="cu['cu'].name"/>
-								<h4 style = 'display: inline; text-align:right'>
+								<h4 style="display: inline; margin-left:580px">
 									Date: <t t-esc="datetime.datetime.today().date()"/>
 								</h4>
 								<table
