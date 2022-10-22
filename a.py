@@ -4,10 +4,10 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 # in local
-db = "aamer_151"  # Database name
-odoo_username = "admin"  # odoo username
-odoo_password = "admin"  # odoo password
-url = 'http://localhost:2365' # odoo url/domain can work with https
+db = "Alpha_221007"  # Database name
+odoo_username = "developer"  # odoo username
+odoo_password = "developer"  # odoo password
+url = 'http://localhost:8069' # odoo url/domain can work with https
 # end
 
 common = xmlrpc.client.ServerProxy(url+"/xmlrpc/2/common")
