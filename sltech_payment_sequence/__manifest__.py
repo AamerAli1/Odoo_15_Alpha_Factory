@@ -11,6 +11,7 @@
         'data': [
                 'data/data.xml',
                 'views/account_payment.xml',
+                'report/payment_report.xml',
         ],
         'author': "SL TECH ERP SOLUTION",
         'website': "https://www.sltecherpsolution.com",

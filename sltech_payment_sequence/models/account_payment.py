@@ -30,9 +30,9 @@ class AccountPayment(models.Model):
     def create(self, vals):
         payment_type = vals.get('payment_type', '')
         code = ''
-        if payment_type == 'outbound':
+        if payment_type == 'inbound':
             code = 'account.payment.customer.invoice'
-        elif payment_type == 'inbound':
+        elif payment_type == 'outbound':
             code = 'account.payment.supplier.invoice'
         if code:
             vals['sltech_name'] = self.env['ir.sequence'].next_by_code(code)
