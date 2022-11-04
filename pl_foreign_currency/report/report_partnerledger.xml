@@ -161,7 +161,8 @@
 			model="account.report.partner.ledger" string="Partner Ledger"
 			report_type="qweb-pdf" name="pl_foreign_currency.partnerledger"
 			file="pl_foreign_currency.partnerledger" />
-
+	</data>
+	<data noupdate="1">
 		<record id="paperformat_partner_ledger" model="report.paperformat">
             <field name="name">Partner Ledger Custom</field>
              <field name="default" eval="True" />
