@@ -87,7 +87,7 @@ class PartnerLedgerForeignCurrency(models.AbstractModel):
         partner_domain= ' and aml.partner_id = %d ' % partner_id.id
         
         sql = """  
-                select am.name jname,am.payment_reference payment_reference,am.ref as ref,aj.code as code ,aml.date, aml.partner_id, aml.id ,aml.name,case when aml.debit  != 0.0 and aml.amount_currency != 0.0 then aml.amount_currency
+                select am.name jname,am.payment_reference payment_ref,am.ref as ref,aj.code as code ,aml.date, aml.partner_id, aml.id ,aml.name,case when aml.debit  != 0.0 and aml.amount_currency != 0.0 then aml.amount_currency
                 when aml.debit  != 0.0 and aml.amount_currency = 0.0 then aml.debit else 0.0 end as debit
                 ,case when aml.credit  != 0.0 and aml.amount_currency != 0.0 then -aml.amount_currency
                 when aml.credit  != 0.0 and aml.amount_currency = 0.0 then aml.credit else 0.0 end as credit
