@@ -78,7 +78,7 @@
 
 											<tr
 												t-foreach="cu['lines']" t-as="line" t-if="line['date']">
-												<td>
+												<td style="padding: 0;">
 													<span t-esc="line['date']" />
 												</td>
 
