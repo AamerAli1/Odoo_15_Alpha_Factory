@@ -102,10 +102,10 @@
 
 
 												<td>
-													<t t-if="line['name']">
+<!--													<t t-if="line['name']">-->
 
-														<span t-esc="line['name']" />
-													</t>
+														<span t-esc="line['payment_ref']" />
+<!--													</t>-->
 												</td>
 
 												<td style="text-align:right !important">
