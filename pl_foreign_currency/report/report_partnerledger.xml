@@ -30,7 +30,7 @@
 							<t t-foreach="get_lines(data,o)" t-as="cu">
 								<h3 style = "display: inline;">Currency: </h3>
 								<h3 style = "display: inline;" t-esc="cu['cu'].name"/>
-								<h4 style="display: inline; margin-left:580px">
+								<h4 style="display: inline; margin-left:462px">
 									Date: <t t-esc="datetime.datetime.today().date()"/>
 								</h4>
 								<table
@@ -161,5 +161,26 @@
 			model="account.report.partner.ledger" string="Partner Ledger"
 			report_type="qweb-pdf" name="pl_foreign_currency.partnerledger"
 			file="pl_foreign_currency.partnerledger" />
+
+		<record id="paperformat_partner_ledger" model="report.paperformat">
+            <field name="name">Partner Ledger Custom</field>
+             <field name="default" eval="True" />
+            <field name="format">Letter</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">28</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+		<record id="action_report_partnerledger" model="ir.actions.report">
+            <field name="paperformat_id" ref="paperformat_partner_ledger"/>
+        </record>
+
 	</data>
 </odoo>
