@@ -5,6 +5,17 @@
         <template id="sltech_invoice_body">
             <t t-set="get_sale_details" t-value="o.get_sale_details()"/>
             <div class="cus_en">
+                <tr style="width:100%;">
+                    <td style="float:left;">
+                        <span><strong>VAT:</strong></span>
+                    </td>
+                    <td>
+                        <t t-esc="o.partner_id.vat"/>
+                    </td>
+                    <td style="float:right;">
+                        <span style="float:right;"><strong>الرقم الضريبي </strong></span>
+                    </td>
+                </tr>
                 <table style="font-size:14px; border: 1px solid black;width: 100%" >
                     <tr>
                         <td  colspan="3"/>
@@ -42,10 +53,6 @@
                         </td>
                         <td colspan="4"/>
                         <td colspan="3" >
-                                <div style="width:100px;height:100px;">
-                                    <img t-if="o.l10n_sa_qr_code_str" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.l10n_sa_qr_code_str, 75, 75)"
-                                        style=" display: block; margin-left: auto; margin-right: auto; width: 100px; height: 100px;"/>
-                                </div>
                         </td>
                         <td colspan="2"/>
                         <td colspan="2">
@@ -280,9 +287,12 @@
 
 
                     <table style="font-size:14px;border: 1px solid black; width: 100%">
-
                          <tr>
-                            <td/>
+                             <td rowspan="4"><div style="width:20px;height:20px;padding:10px 0 0 10px;">
+                                    <img t-if="o.l10n_sa_qr_code_str" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.l10n_sa_qr_code_str, 75, 75)"
+                                        style=" display: block; margin-left: auto; margin-right: auto; width: 100px; height: 100px;"/>
+                                </div></td>
+<!--                             <td></td>-->
                             <td/>
                             <td/>
                             <td>
@@ -290,7 +300,7 @@
                                 <span style="float: right">اجور الشحن</span>
                             </td>
                             <td>&amp;nbsp;</td>
-                           <td style="border: 1px solid black; width: 15%">
+                           <td style="border: 1px solid black; width: 15%;text-align:center;">
                                 <span>
                                     <t t-esc="o.currency_id.symbol"/>
                                     <t t-esc="get_sale_details.get('freight_cost')"/>
@@ -300,7 +310,6 @@
 
 
                         <tr>
-                            <td/>
                             <td/>
                             <td/>
                             <td>
@@ -317,7 +326,7 @@
                         </tr>
                         <tr>
                             <td/>
-                            <td/>
+
                             <td colspan="2">
                                 <span style="float: right">Amount before VAT</span>
                                 <span style="float: right">المبلغ قبل الضريبة</span>
@@ -332,13 +341,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td/>
                             <td colspan="3">
                                 <span style="float: right">VAT values (15%)</span>
                                 <span style="float: right">(15%)</span>
                                 <span style="float: right">ضريبة القيمة المضافة</span>
                             </td>
-                            <td>&amp;nbsp;</td>
+                            <td></td>
                             <td style="text-align: center;border: 1px solid black;">
                                 <span>
                                     <t t-esc="o.currency_id.symbol"/>
@@ -357,7 +365,7 @@
                                 <span style = "float: right">Total</span>
                                 <span style="float: right">الاجمالي فقط</span>
                             </td>
-                            <td>&amp;nbsp;</td>
+                            <td></td>
                             <td style="text-align: center;border: 1px solid black;">
                                 <span>
                                     <t t-esc="o.currency_id.symbol"/>
@@ -417,6 +425,14 @@
                         </tr>
 
                     </table>
+                           <tr>
+                               <td>
+                                   <span><t t-esc="o.company_id.street"/></span>
+                               </td>
+                               <td>
+                                   <span style="float: right;"><t t-esc="o.company_id.email"/></span>
+                               </td>
+                           </tr>
                 </div>
 
 
