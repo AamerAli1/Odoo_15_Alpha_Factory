@@ -10,7 +10,10 @@
                         <span><strong>VAT:</strong></span>
                     </td>
                     <td>
-                        <t t-esc="o.partner_id.vat"/>
+                        <span>310583519900003</span>
+                    </td>
+                    <td style="float:right;">
+                        <span>310583519900003</span>
                     </td>
                     <td style="float:right;">
                         <span style="float:right;"><strong>الرقم الضريبي </strong></span>
