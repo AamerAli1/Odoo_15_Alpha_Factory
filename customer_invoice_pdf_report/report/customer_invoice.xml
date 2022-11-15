@@ -12,11 +12,11 @@
                     <td>
                         <span><t t-esc="o.company_id.vat"/></span>
                     </td>
+<!--                    <td style="float:right;">-->
+<!--                        <span><t t-esc="o.company_id.vat"/></span>-->
+<!--                    </td>-->
                     <td style="float:right;">
-                        <span><t t-esc="o.company_id.vat"/></span>
-                    </td>
-                    <td style="float:right;">
-                        <span style="float:right;"><strong>الرقم الضريبي </strong></span>
+                        <span><t t-esc="o.company_id.vat"/></span><span style="float:right;"><strong>الرقم الضريبي </strong></span>
                     </td>
                 </tr>
                 <table style="font-size:14px; border: 1px solid black;width: 100%" >
