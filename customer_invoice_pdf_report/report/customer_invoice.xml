@@ -413,7 +413,7 @@
                            </tr>
        <tr>
            <td colspan="2">
-               <span><t t-esc="o.company_id.company_registry"/> </span>
+               <span style="text-align: center"><t t-esc="o.company_id.company_registry"/> </span>
            </td>
        </tr>
                 </div>
