@@ -10,10 +10,10 @@
                         <span><strong>VAT:</strong></span>
                     </td>
                     <td>
-                        <span>310583519900003</span>
+                        <span><t t-esc="o.company_id.vat"/></span>
                     </td>
                     <td style="float:right;">
-                        <span>310583519900003</span>
+                        <span><t t-esc="o.company_id.vat"/></span>
                     </td>
                     <td style="float:right;">
                         <span style="float:right;"><strong>الرقم الضريبي </strong></span>
@@ -411,6 +411,11 @@
                                    <span style="float: right;"><t t-esc="o.company_id.email"/></span>
                                </td>
                            </tr>
+       <tr>
+           <td colspan="2">
+               <span><t t-esc="o.company_id.company_registry"/> </span>
+           </td>
+       </tr>
                 </div>
 
 
