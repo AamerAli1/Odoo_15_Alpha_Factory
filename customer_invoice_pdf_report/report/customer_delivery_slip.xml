@@ -45,7 +45,7 @@
                         <td colspan="2"/>
                     </tr>
                 </table>
-                <table style="float: left;display: inline-block;border: 1px solid black;width: 60%;" >
+                <table style="float: left;display: inline-block;border: 1px solid black;width: 60%;border-bottom:0;" >
 <!--                    column width protocols-->
                         <tr>
                             <td style="width: 10%">
@@ -197,33 +197,33 @@
                     </tr>
                     <tr>
                         <td class="sltech-box-class">
-                            <span>Reference</span>
+                            <strong><span>Reference</span></strong>
                         </td>
                         <td class="sltech-box-class">
-                            <span>Description</span>
-                            <span style="float: right">البيان</span>
+                            <strong><span>Description</span></strong>
+                           <strong> <span style="float: right">البيان</span></strong>
                         </td>
                         <td class="sltech-box-class">
-                            <span>Unit</span>
+                            <strong><span>Unit</span></strong>
                         </td>
                         <td class="sltech-box-class">
-                            <span>Qty.</span>
+                            <strong><span>Qty.</span></strong>
                         </td>
                     </tr>
                 </table>
-                <table style="width: 100%">
+                <table style="width: 100%;border: 1px solid black;" >
                     <t t-foreach="o.move_ids_without_package" t-as="line">
                         <tr>
-                            <td style="width: 18%;">
+                            <td style="width: 18%;border: 1px solid black;">
                                 <span><t t-esc="line.product_id.default_code"/></span>
                             </td>
-                            <td style="width: 52%">
+                            <td style="width: 52%;border: 1px solid black;">
                                 <span><t t-esc="line.description_picking"/></span>
                             </td>
-                            <td style="width: 6%">
+                            <td style="width: 6%;border: 1px solid black;">
                                 <span><t t-esc="line.product_id.uom_id.name"/></span>
                             </td>
-                            <td style="width: 6%">
+                            <td style="width: 6%;border: 1px solid black;">
                                 <span><t t-esc="'%.2f'% line.quantity_done"/></span>
                             </td>
                         </tr>
@@ -299,9 +299,9 @@
 <!--                    </div>-->
 <!--                </t>-->
 <!--            </t>-->
-            <t t-call="web.basic_layout">
+            <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
-                    <t>
+                    <t t-call="web.external_layout">
                         <div class="page">
                             <t t-call="customer_invoice_pdf_report.sltech_delivery_body"/>
                         </div>

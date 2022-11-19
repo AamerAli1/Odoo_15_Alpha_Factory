@@ -4,7 +4,7 @@
 
         <template id="sltech_invoice_body">
             <t t-set="get_sale_details" t-value="o.get_sale_details()"/>
-            <div class="cus_en">
+            <div class="cus_en" style="margin-top:-5px;">
                 <table style="width:100%;">
                     <tr>
                         <td style="float:left;width:50%;">
@@ -442,7 +442,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="6" style="height:60px;"/>
+                                <td colspan="6" style="height:20px;"/>
                             </tr>
                             <tr>
                                 <td colspan="3">
@@ -453,7 +453,7 @@
                                     <span>التوقيع</span>
                                 </td>
                                 <td colspan="2"/>
-                                <td>
+                                <td  style="text-align:right;">
                                     <span>
 
 
